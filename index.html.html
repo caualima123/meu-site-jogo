@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyber Game - Clique para Jogar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #000000;
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffcc;
+    }
+
+    .centered {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 60px 40px;
+      border: 2px solid #00ffcc;
+      border-radius: 20px;
+      box-shadow: 0 0 30px #00ffcc;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 40px;
+      text-shadow: 0 0 10px #00ffcc;
+    }
+
+    .play-button {
+      background-color: #00ffcc;
+      border: none;
+      padding: 15px 50px;
+      font-size: 20px;
+      color: #000;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+      text-transform: uppercase;
+    }
+
+    .play-button:hover {
+      background-color: #00bfa6;
+      transform: scale(1.1);
+    }
+
+    .game-grid {
+      display: none;
+      max-width: 1000px;
+      margin: 40px auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .game-card {
+      width: 280px;
+      height: 220px;
+      background-color: #111;
+      border: 2px solid #00ffcc;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #00ffcc;
+      font-size: 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 10px #00ffcc33;
+    }
+
+    .game-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00ffcc;
+    }
+
+    .game-card img {
+      width: 100%;
+      border-radius: 10px 10px 0 0;
+      object-fit: cover;
+    }
+
+    .game-description {
+      font-size: 14px;
+      color: #00ffcc;
+      margin-top: 10px;
+    }
+
+    .credit {
+      position: fixed;
+      bottom: 10px;
+      right: 20px;
+      color: #00ffcc;
+      font-size: 14px;
+      opacity: 0.6;
+    }
+
+    /* Media Query para Responsividade */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 28px;
+      }
+      .game-card {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    #game-container {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      border: 2px solid #00ffcc;
+      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    iframe {
+      width: 100%;
+      height: 70vh; /* Aumenta a altura do jogo para maior visibilidade */
+      border: none;
+      margin-top: 20px;
+    }
+
+    #back-button {
+      background-color: #00ffcc;
+      color: black;
+      padding: 10px 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="centered" id="intro-screen">
+    <div class="container">
+      <h1>Clique para Jogar</h1>
+      <button class="play-button" onclick="mostrarJogos()">Entrar</button>
+    </div>
+  </div>
+
+  <div class="game-grid" id="games-screen">
+    <div class="game-card" onclick="abrirJogo('flappybird')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Flappy_bird_gameplay_screenshot.png" alt="Flappy Bird">
+      Flappy Bird
+      <div class="game-description">Toque para voar e evite os obstáculos!</div>
+    </div>
+    <div class="game-card" onclick="abrirJogo('dinossauro')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Dinosaur_game_Chrome.png" alt="Dinossauro">
+      Dinossauro
+      <div class="game-description">Use a barra de espaço para pular os cactos!</div>
+    </div>
+    <div class="game-card" onclick="abrirJogo('cobrinha')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Snake_game.png" alt="Cobrinha">
+      Cobrinha
+      <div class="game-description">Coma a comida e cresça sem bater nas paredes!</div>
+    </div>
+    <div class="game-card" onclick="abrirJogo('tetris')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Tetris_Logo.png" alt="Tetris">
+      Tetris
+      <div class="game-description">Gire e encaixe as peças para completar linhas!</div>
+    </div>
+    <div class="game-card" onclick="abrirJogo('pong')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Pong_arcade_game_screenshot.png" alt="Pong">
+      Pong
+      <div class="game-description">Use as setas para controlar a raquete!</div>
+    </div>
+    <div class="game-card" onclick="abrirJogo('memory')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Memory_game.jpg" alt="Jogo da Memória">
+      Jogo da Memória
+      <div class="game-description">Encontre os pares de cartas!</div>
+    </div>
+    <div class="game-card" onclick="abrirJogo('space')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Spacebar_clicker.png" alt="Corrida Espacial">
+      Corrida Espacial
+      <div class="game-description">Pressione a barra de espaço para acelerar!</div>
+    </div>
+    <div class="game-card" onclick="abrirJogo('pixel')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Pixel_Adventure.png" alt="Aventura Pixel">
+      Aventura Pixel
+      <div class="game-description">Complete os desafios de plataforma!</div>
+    </div>
+    <div class="game-card" onclick="abrirJogo('zombie')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Zombs.io_game.png" alt="Zumbi Shooter">
+      Zumbi Shooter
+      <div class="game-description">Defenda-se dos zumbis com armas!</div>
+    </div>
+    <div class="game-card" onclick="abrirJogo('clicker')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Cookie_Clicker_Gameplay.png" alt="Clicker Futurista">
+      Clicker Futurista
+      <div class="game-description">Clique para ganhar cookies e evolua!</div>
+    </div>
+  </div>
+
+  <div id="game-container">
+    <button id="back-button" onclick="voltar()">Voltar</button>
+    <iframe id="game-frame" src="" allowfullscreen></iframe>
+  </div>
+
+  <div class="credit">Criação: Cauã lima</div>
+
+  <script>
+    const games = {
+      flappybird: 'https://flappybird.io/',
+      dinossauro: 'https://chromedino.com/',
+      cobrinha: 'https://playsnake.org/',
+      tetris: 'https://tetris.com/play-tetris',
+      pong: 'https://ponggame.org/',
+      memory: 'https://memorymatchgame.net/',
+      space: 'https://spacebarclicker.org/',
+      pixel: 'https://pixeladventuregame.com/',
+      zombie: 'https://zombs.io/',
+      clicker: 'https://cookieclicker.io/'
+    };
+
+    function mostrarJogos() {
+      document.getElementById('intro-screen').style.display = 'none';
+      document.getElementById('games-screen').style.display = 'flex';
+    }
+
+    function abrirJogo(jogo) {
+      document.getElementById('games-screen').style.display = 'none';
+      document.getElementById('game-container').style.display = 'block';
+      const iframe = document.getElementById('game-frame');
+      iframe.src = games[jogo];
+    }
+
+    function voltar() {
+      document.getElementById('game-container').style.display = 'none';
+      document.getElementById('games-screen').style.display = 'flex';
+    }
+  </script>
+</body>
+</html
